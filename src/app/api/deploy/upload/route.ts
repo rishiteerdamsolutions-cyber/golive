@@ -3,8 +3,6 @@ import { prisma } from "@/lib/db";
 import { getOrCreateGuestUserId } from "@/lib/guest";
 import { NextResponse } from "next/server";
 import JSZip from "jszip";
-import { writeFile, mkdir } from "fs/promises";
-import path from "path";
 import {
   detectFramework,
   detectDatabase,
@@ -12,8 +10,6 @@ import {
   getBuildCommand,
 } from "@/lib/detect";
 import type { PackageJson } from "@/lib/types";
-
-const UPLOAD_DIR = path.join(process.cwd(), ".golive-uploads");
 
 export async function POST(req: Request) {
   try {
@@ -66,6 +62,8 @@ export async function POST(req: Request) {
       }
     }
 
+    const zipBase64 = buffer.toString("base64");
+
     const deployment = await prisma.deployment.create({
       data: {
         userId,
@@ -77,12 +75,9 @@ export async function POST(req: Request) {
           paymentGateways,
           buildCommand,
         }),
+        zipData: zipBase64,
       },
     });
-
-    await mkdir(UPLOAD_DIR, { recursive: true });
-    const zipPath = path.join(UPLOAD_DIR, `${deployment.id}.zip`);
-    await writeFile(zipPath, buffer);
 
     return NextResponse.json({
       deploymentId: deployment.id,

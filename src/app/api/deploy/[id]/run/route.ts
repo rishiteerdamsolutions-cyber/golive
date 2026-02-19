@@ -5,10 +5,6 @@ import { provisionDatabase } from "@/lib/database-provision";
 import { NextResponse } from "next/server";
 import { Octokit } from "@octokit/rest";
 import JSZip from "jszip";
-import path from "path";
-import { readFile } from "fs/promises";
-
-const UPLOAD_DIR = path.join(process.cwd(), ".golive-uploads");
 
 const SKIP_PATHS = ["node_modules", ".git", ".next", "dist", "build", ".golive-uploads"];
 
@@ -70,11 +66,7 @@ export async function POST(
       data: { status: "building", errorMessage: null },
     });
 
-    const zipPath = path.join(UPLOAD_DIR, `${id}.zip`);
-    let zipBuffer: Buffer;
-    try {
-      zipBuffer = await readFile(zipPath);
-    } catch {
+    if (!deployment.zipData) {
       await prisma.deployment.update({
         where: { id },
         data: { status: "failed", errorMessage: "Upload expired. Please upload again." },
@@ -84,6 +76,7 @@ export async function POST(
         { status: 400 }
       );
     }
+    const zipBuffer = Buffer.from(deployment.zipData, "base64");
 
     const zip = await JSZip.loadAsync(zipBuffer);
     const files: { path: string; content: Buffer }[] = [];

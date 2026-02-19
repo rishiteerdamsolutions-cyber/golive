@@ -7,7 +7,8 @@
     "build": "prisma generate && next build",
     "postinstall": "prisma generate",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "clear-deployments": "npx tsx scripts/clear-deployments.ts"
   },
   "dependencies": {
     "@auth/core": "^0.41.0",
@@ -24,6 +25,7 @@
     "stripe": "^20.3.1"
   },
   "devDependencies": {
+    "tsx": "^4.19.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

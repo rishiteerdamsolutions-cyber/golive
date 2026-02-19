@@ -1,23 +1,23 @@
 import NextAuth from "next-auth";
 import GitHub from "next-auth/providers/github";
-import Google from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "./lib/db";
 
+const providers = [];
+
+if (process.env.AUTH_GITHUB_ID && process.env.AUTH_GITHUB_SECRET) {
+  providers.push(
+    GitHub({
+      clientId: process.env.AUTH_GITHUB_ID,
+      clientSecret: process.env.AUTH_GITHUB_SECRET,
+      allowDangerousEmailAccountLinking: true,
+    })
+  );
+}
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
-  providers: [
-    GitHub({
-      clientId: process.env.AUTH_GITHUB_ID ?? "dummy",
-      clientSecret: process.env.AUTH_GITHUB_SECRET ?? "dummy",
-      allowDangerousEmailAccountLinking: true,
-    }),
-    Google({
-      clientId: process.env.AUTH_GOOGLE_ID ?? "dummy",
-      clientSecret: process.env.AUTH_GOOGLE_SECRET ?? "dummy",
-      allowDangerousEmailAccountLinking: true,
-    }),
-  ],
+  providers,
   callbacks: {
     async signIn({ user }) {
       if (!user.email) {
@@ -39,4 +39,5 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     strategy: "database",
     maxAge: 30 * 24 * 60 * 60,
   },
+  trustHost: true,
 });

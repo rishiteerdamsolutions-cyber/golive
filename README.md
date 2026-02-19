@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GoLive — You built it with AI. We make it live.
 
-## Getting Started
+Deploy your Cursor-built app in 60 seconds. No Git, no DevOps, no confusion.
 
-First, run the development server:
+## How It Works
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. User picks their project folder (or uploads a zip)
+2. Connects GitHub (one-click OAuth)
+3. Connects Vercel (one-click OAuth)
+4. Clicks Deploy
+5. GoLive automatically:
+   - Creates a GitHub repo in the **user's own GitHub**
+   - Pushes code
+   - Detects if a database is needed (Prisma → PostgreSQL, Mongoose → MongoDB)
+   - Provisions database via **user's own Vercel marketplace integrations** (Neon, MongoDB Atlas)
+   - Injects env vars (`DATABASE_URL`, etc.)
+   - Deploys to **user's own Vercel**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Everything runs in the user's own accounts. GoLive owns nothing.**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Setup (for GoLive developers)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-## Learn More
+2. **Configure environment variables**
+   Copy `.env` and fill in:
+   - `DATABASE_URL` - SQLite: `file:./dev.db` (GoLive's own local DB for tracking deployments)
+   - `NEXTAUTH_URL` - Your app URL (e.g. `http://localhost:3000`)
+   - `NEXTAUTH_SECRET` - Random string for session encryption
+   - `AUTH_GITHUB_ID` / `AUTH_GITHUB_SECRET` - From [GitHub OAuth Apps](https://github.com/settings/developers)
+   - `NEXT_PUBLIC_VERCEL_APP_CLIENT_ID` / `VERCEL_APP_CLIENT_SECRET` - Create app at [Vercel Dashboard](https://vercel.com/dashboard) → Integrations → OAuth
 
-To learn more about Next.js, take a look at the following resources:
+   That's it. No database API keys needed — databases are provisioned in each user's own account.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. **Run database migrations**
+   ```bash
+   npx prisma migrate dev
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4. **Start the dev server**
+   ```bash
+   npm run dev
+   ```
 
-## Deploy on Vercel
+## Database Provisioning
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+When GoLive detects a project needs a database:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Detected Dependency | Database Type | Provisioned Via |
+|---|---|---|
+| Prisma, Drizzle | PostgreSQL | Neon (user's Vercel marketplace integration) |
+| Mongoose, mongodb | MongoDB | MongoDB Atlas (user's Vercel marketplace integration) |
+
+If the user hasn't installed the required integration on their Vercel account, GoLive shows a one-click link to install it (free tier).
+
+## Requirements for End Users
+
+- **GitHub account** — for code storage (connected via OAuth)
+- **Vercel account** — for hosting + database (connected via OAuth)
+- **Neon integration on Vercel** — only if project uses PostgreSQL (free, one-click install)
+- **MongoDB Atlas integration on Vercel** — only if project uses MongoDB (free, one-click install)
+
+## Free Tier
+
+- 1 successful deployment per user
+- Upgrade to Pro for unlimited (Stripe integration can be added)

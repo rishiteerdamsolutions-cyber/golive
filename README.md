@@ -1,4 +1,4 @@
-# GoLive — You built it with AI. We make it live.
+# OMGItsLive — You built it with AI. We make it live.
 
 Deploy your Cursor-built app in 60 seconds. No Git, no DevOps, no confusion.
 
@@ -8,7 +8,7 @@ Deploy your Cursor-built app in 60 seconds. No Git, no DevOps, no confusion.
 2. Connects GitHub (one-click OAuth)
 3. Connects Vercel (one-click OAuth)
 4. Clicks Deploy
-5. GoLive automatically:
+5. OMGItsLive automatically:
    - Creates a GitHub repo in the **user's own GitHub**
    - Pushes code
    - Detects if a database is needed (Prisma → PostgreSQL, Mongoose → MongoDB)
@@ -16,9 +16,9 @@ Deploy your Cursor-built app in 60 seconds. No Git, no DevOps, no confusion.
    - Injects env vars (`DATABASE_URL`, etc.)
    - Deploys to **user's own Vercel**
 
-**Everything runs in the user's own accounts. GoLive owns nothing.**
+**Everything runs in the user's own accounts. OMGItsLive owns nothing.**
 
-## Setup (for GoLive developers)
+## Setup (for OMGItsLive developers)
 
 1. **Install dependencies**
    ```bash
@@ -27,7 +27,7 @@ Deploy your Cursor-built app in 60 seconds. No Git, no DevOps, no confusion.
 
 2. **Configure environment variables**
    Copy `.env` and fill in:
-   - `DATABASE_URL` - SQLite: `file:./dev.db` (GoLive's own local DB for tracking deployments)
+   - `DATABASE_URL` - SQLite: `file:./dev.db` (OMGItsLive's own local DB for tracking deployments)
    - `NEXTAUTH_URL` - Your app URL (e.g. `http://localhost:3000`)
    - `NEXTAUTH_SECRET` - Random string for session encryption
    - `AUTH_GITHUB_ID` / `AUTH_GITHUB_SECRET` - From [GitHub OAuth Apps](https://github.com/settings/developers)
@@ -47,14 +47,14 @@ Deploy your Cursor-built app in 60 seconds. No Git, no DevOps, no confusion.
 
 ## Database Provisioning
 
-When GoLive detects a project needs a database:
+When OMGItsLive detects a project needs a database:
 
 | Detected Dependency | Database Type | Provisioned Via |
 |---|---|---|
 | Prisma, Drizzle | PostgreSQL | Neon (user's Vercel marketplace integration) |
 | Mongoose, mongodb | MongoDB | MongoDB Atlas (user's Vercel marketplace integration) |
 
-If the user hasn't installed the required integration on their Vercel account, GoLive shows a one-click link to install it (free tier).
+If the user hasn't installed the required integration on their Vercel account, OMGItsLive shows a one-click link to install it (free tier).
 
 ## Requirements for End Users
 

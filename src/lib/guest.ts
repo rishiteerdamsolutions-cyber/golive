@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { prisma } from "./db";
 
-const GUEST_COOKIE = "golive_guest_id";
+const GUEST_COOKIE = "omgitslive_guest_id";
 
 export async function getOrCreateGuestUserId(): Promise<string> {
   const cookieStore = await cookies();
@@ -22,7 +22,7 @@ export async function getOrCreateGuestUserId(): Promise<string> {
     user = await prisma.user.create({
       data: {
         id: guestId,
-        email: `${guestId}@golive.local`,
+        email: `${guestId}@omgitslive.local`,
         name: "Guest",
       },
     });

@@ -6,7 +6,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center px-6">
       <div className="w-full max-w-md">
         <Link href="/" className="text-emerald-400 font-bold text-lg block mb-8">
-          ← GoLive
+          ← OMGItsLive
         </Link>
         <h1 className="text-3xl font-bold mb-2">Sign in to deploy</h1>
         <p className="text-slate-400 mb-8">

@@ -105,7 +105,7 @@ export async function POST(
     try {
       const { data: repo } = await octokit.repos.createForAuthenticatedUser({
         name: deployment.name,
-        description: "Deployed with GoLive",
+        description: "Deployed with OMGItsLive",
         private: false,
         auto_init: true,
       });
@@ -173,7 +173,7 @@ export async function POST(
 
     const project = await projectRes.json();
 
-    // Auto-provision database in USER's own Vercel account (GoLive owns nothing)
+    // Auto-provision database in USER's own Vercel account (OMGItsLive owns nothing)
     try {
       const envVarsJson = deployment.envVars as string;
       const parsed = typeof envVarsJson === "string" ? JSON.parse(envVarsJson) : envVarsJson;

@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GoLive — You built it with AI. We make it live.",
+  title: "OMGItsLive — You built it with AI. We make it live.",
   description:
     "Deploy your Cursor-built app in 60 seconds. No Git, no DevOps, no confusion. Just upload and go live.",
 };

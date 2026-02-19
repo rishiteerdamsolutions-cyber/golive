@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       <nav className="flex items-center justify-between px-6 py-4 max-w-6xl mx-auto">
-        <span className="text-xl font-bold text-emerald-400">GoLive</span>
+        <span className="text-xl font-bold text-emerald-400">OMGItsLive</span>
         <div className="flex gap-4">
           <Link
             href="/deploy"

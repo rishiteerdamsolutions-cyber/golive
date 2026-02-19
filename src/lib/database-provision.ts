@@ -1,6 +1,6 @@
 /**
  * Automatic database provisioning — runs in the USER's own Vercel account.
- * GoLive owns nothing. Databases are created via Vercel's Storage/Marketplace API
+ * OMGItsLive owns nothing. Databases are created via Vercel's Storage/Marketplace API
  * using the user's own Vercel OAuth token.
  *
  * Flow:
@@ -165,7 +165,7 @@ export async function provisionPostgres(
       return null;
     }
 
-    const storeName = `golive-${projectName}-${Date.now()}`.slice(0, 128);
+    const storeName = `omgitslive-${projectName}-${Date.now()}`.slice(0, 128);
     const { storeId, resourceId } = await createStore(
       vercelToken,
       storeName,
@@ -220,7 +220,7 @@ export async function provisionMongoDB(
       return null;
     }
 
-    const storeName = `golive-${projectName}-${Date.now()}`.slice(0, 128);
+    const storeName = `omgitslive-${projectName}-${Date.now()}`.slice(0, 128);
     const { storeId, resourceId } = await createStore(
       vercelToken,
       storeName,
@@ -246,7 +246,7 @@ export async function provisionMongoDB(
 
 /**
  * Auto-provision database based on detected project needs.
- * Uses the user's own Vercel account — GoLive owns nothing.
+ * Uses the user's own Vercel account — OMGItsLive owns nothing.
  */
 export async function provisionDatabase(
   databaseType: string,

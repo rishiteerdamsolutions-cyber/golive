@@ -21,7 +21,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   callbacks: {
     async signIn({ user }) {
       if (!user.email) {
-        user.email = `user-${user.id}@golive.local`;
+        user.email = `user-${user.id}@omgitslive.local`;
       }
       return true;
     },
